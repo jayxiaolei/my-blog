@@ -7,7 +7,6 @@ const config = require('./config');
 
 app.use((req, res, next) => {
     res.cc = (err, status = 1) => {
-        console.log(err)
         res.send({
             status,
             message: err instanceof Error ? err.message : err
@@ -39,7 +38,6 @@ app.use((err, req, res, next) => {
     }
 
     if (err.name === 'UnauthorizedError') {
-        console.log(11)
         return res.cc('身份认证失败！', 403)
     }
     res.cc(err)
