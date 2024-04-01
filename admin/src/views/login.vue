@@ -49,7 +49,7 @@ export default {
     setup() {
         const router = useRouter()
         const param = reactive({
-            username: 'xiaolei',
+            username: 'jay',
             password: 'jxl19971231',
         })
 

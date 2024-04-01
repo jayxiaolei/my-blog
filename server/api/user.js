@@ -13,6 +13,4 @@ router.post('/reguser', expressJoi(reg_login_schema), userHandle.reguser)
 
 router.post('/login', expressJoi(reg_login_schema), userHandle.login)
 
-
-
 module.exports = router

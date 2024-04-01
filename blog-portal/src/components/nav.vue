@@ -1,7 +1,7 @@
 <template>
     <nav class="nav" :class="{ 'bg-color': top > 100 }">
         <div class="nav-content container">
-            <img :src="logo" alt="logo" class="logo" />
+            <img fetchpriority="high" src="../assets/jay.webp" alt="logo" class="logo" />
             <ul class="nav-menu">
                 <li
                     class="nav-item"
@@ -11,7 +11,11 @@
                     <el-icon color="white" :size="20" class="nva-icon">
                         <component :is="item.logo"></component>
                     </el-icon>
-                    <router-link :to="item.path">{{ item.text }}</router-link>
+                    <router-link :to="item.path">
+                        <span>
+                            {{ item.text }}
+                        </span>
+                    </router-link>
                 </li>
             </ul>
             <span class="nav-drawer">
@@ -53,8 +57,6 @@ export default {
         Camera
     },
     setup() {
-        const logo =
-            'https://logos.textgiraffe.com/logos/logo-name/Jay-designstyle-smoothie-m.png'
         const navList = [
             {
                 text: '首页',
@@ -78,7 +80,6 @@ export default {
             router.push(item.path)
         }
         return {
-            logo,
             navList,
             top,
             clickDropItem
@@ -93,6 +94,7 @@ export default {
     position: fixed;
     top: 0;
     width: 100%;
+    z-index: 9999;
 
     .nav-drawer {
         cursor: pointer;
@@ -156,6 +158,7 @@ export default {
 
     .logo {
         width: 40px;
+        height: 52px;
     }
 }
 

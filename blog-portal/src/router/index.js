@@ -1,5 +1,4 @@
 import {createRouter, createWebHashHistory} from "vue-router";
-import Home from "_v/home.vue";
 
 const routes = [
     {
@@ -12,7 +11,7 @@ const routes = [
         meta: {
             title: '首页'
         },
-        component: Home,
+        component: () => import('_v/home.vue'),
     },
     {
         path: '/article/:id',

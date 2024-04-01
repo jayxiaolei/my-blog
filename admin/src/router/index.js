@@ -5,7 +5,7 @@ import Login from '_v/login.vue'
 const routes = [
     {
         path: '/',
-        redirect: '/dashboard',
+        redirect: '/login',
     },
     {
         path: '/login',

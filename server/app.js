@@ -15,7 +15,7 @@ app.use((req, res, next) => {
     next()
 })
 // 配置登录的token
-app.use(expressJwt({secret: config.secretKey}).unless({path: [/^\/api/]}))
+app.use(expressJwt({secret: config.secretKey}).unless({path: [/^\/api\/blog/]}))
 
 app.use(express.json())
 // 配置解析表单数据格式
@@ -28,9 +28,9 @@ const apiUser = require('./api/user')
 const apiAdmin = require('./api/admin')
 const apiArticle = require('./api/article')
 
-app.use('/api', apiUser)
-app.use('/my', apiAdmin)
-app.use('/article', apiArticle)
+app.use('/api/blog', apiUser)
+app.use('/api', apiAdmin)
+app.use('/api', apiArticle)
 
 app.use((err, req, res, next) => {
     if (err instanceof joi.ValidationError) {

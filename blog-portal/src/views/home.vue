@@ -26,14 +26,14 @@ import Main from '_c/main.vue'
 import Footer from '_c/footer.vue'
 import { ElButton, ElMessage } from 'element-plus'
 import { ref } from 'vue'
-import { loginUser } from '_ax/login.js'
+// import { loginUser } from '_ax/login.js'
 export default {
     components: {
         Footer,
         Nav,
         ElButton,
         Main,
-        ElMessage,
+        ElMessage
     },
     methods: {
         showAnimation() {
@@ -50,15 +50,15 @@ export default {
             username: 'jay',
             password: 'jxl19971231'
         }
-        loginUser(param)
-            .then(({ data, status }) => {
-                if (status === 200) {
-                    localStorage.setItem('x-token', data.token)
-                }
-            })
-            .catch(err => {
-                ElMessage.error(err.message)
-            })
+        // loginUser(param)
+        //     .then(({ data, status }) => {
+        //         if (status === 200) {
+        //             localStorage.setItem('x-token', data.token)
+        //         }
+        //     })
+        //     .catch(err => {
+        //         ElMessage.error(err.message)
+        //     })
 
         return {
             scrollTop,
@@ -73,7 +73,7 @@ export default {
     height: 100vh;
 }
 .blog-img {
-    background-image: url(../assets/back.jpeg);
+    background-image: url(../assets/back.webp);
     z-index: 1;
     visibility: visible;
     opacity: 1;
