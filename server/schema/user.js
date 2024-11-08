@@ -14,6 +14,9 @@ const userId = joi.number().required()
 const articleTitle = joi.string().required()
 const articleContent = joi.string().required()
 const id = joi.number().required()
+const commonStr = joi.string().pattern(/^[\S]{0,100}$/).required()
+const parentId = joi.number()
+const normalObject = joi.object().allow(null)
 
 exports.reg_login_schema = {
     body: {
@@ -54,4 +57,25 @@ exports.edit_article = {
     }
 }
 
+exports.get_comments = {
+    params: {
+        article_id: id
+    }
+}
 
+exports.write_comment = {
+    body: {
+        article_id: id,
+        location: commonStr,
+        name: commonStr,
+        content: articleContent,
+        parent_id: parentId,
+        target_user: normalObject
+    }
+}
+
+exports.praise_comment = {
+    body: {
+        id: id
+    }
+}
