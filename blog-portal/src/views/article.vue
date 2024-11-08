@@ -40,7 +40,7 @@
 
         <div class="article-comment">
             <div class="comment-content article-box">
-                <Comment ref="comment" :content="commentList" />
+                <Comment ref="comment" :content="commentList" @refresh-comments="refreshComments" />
             </div>
         </div>
 
@@ -56,7 +56,7 @@ import { ElIcon } from 'element-plus'
 import { Tickets } from '@element-plus/icons-vue'
 import { useStore } from 'vuex'
 import Comment from '_c/comment.vue'
-import { getArticleDetail } from '_ax/article'
+import { getArticleDetail, getComments } from '_ax/article'
 import { useRoute } from 'vue-router'
 export default {
     components: {
@@ -68,56 +68,7 @@ export default {
     },
     setup() {
         const text = ref('')
-        const comments = [
-            {
-                avatar: '',
-                name: '阿金',
-                position: 'Veeva system',
-                content:
-                    'webpack不太适合封装JS库，在编辑器里无法做到智能提示，用rollup打包会更好',
-                praise_num: 1,
-                message_num: 1,
-                time: '今天',
-                message_content: [
-                    {
-                        avatar: '',
-                        name: '阿金',
-                        time: '今天',
-                        position: 'Veeva system',
-                        content:
-                            'webpack不太适合封装JS库，在编辑器里无法做到智能提示，用rollup打包会更好',
-                        praise_num: 1,
-                        message_num: 1,
-                    },
-                    {
-                        avatar: '',
-                        name: '阿金',
-                        time: '今天',
-                        position: 'Veeva system',
-                        content:
-                            'webpack不太适合封装JS库，在编辑器里无法做到智能提示，用rollup打包会更好',
-                        praise_num: 1,
-                        message_num: 1,
-                    },
-                    {
-                        avatar: '',
-                        name: '阿金',
-                        time: '今天',
-                        position: 'Veeva system',
-                        content:
-                            'webpack不太适合封装JS库，在编辑器里无法做到智能提示，用rollup打包会更好',
-                        praise_num: 1,
-                        message_num: 1,
-                        target_user: {
-                            name: 'JAY',
-                            content: '写个d.ts声明文件不就可以吗？',
-                        },
-                    },
-                ],
-            },
-        ]
-
-        const commentList = reactive(comments)
+        const commentList = ref([])
         const titles = reactive({
             arr: [],
         })
@@ -138,7 +89,20 @@ export default {
                 item.isArrive = false
                 return false
             }
+        };
+
+        const refreshComments = () => {
+            getCommentLists();
+        };
+
+        getCommentLists();
+        function getCommentLists() {
+            getComments({ article_id: route.params.id })
+            .then(({ data }) => {
+                commentList.value = data
+            });
         }
+
         watch(
             () => store.state.scrollTop,
             newV => {
@@ -162,6 +126,7 @@ export default {
             scrollTop,
             isArrive,
             commentList,
+            refreshComments
         }
     },
     mounted() {

@@ -63,6 +63,14 @@ const routes = [
                 },
                 component: () => import('../views/detail.vue'),
             },
+            {
+                path: '/comment',
+                name: 'comment',
+                meta: {
+                    title: '文章管理',
+                },
+                component: () => import('../views/comment.vue'),
+            },
         ],
     },
 ]

@@ -9,15 +9,6 @@
                             <el-icon :size="20"><component :is="item.icon" /></el-icon>
                             <span>{{ item.title }}</span>
                         </template>
-                        <!-- <template v-for="subItem in item.subs">
-                            <el-submenu v-if="subItem.subs" :index="subItem.index" :key="subItem.index">
-                                <template #title>{{ subItem.title }}</template>
-                                <el-menu-item v-for="(threeItem, i) in subItem.subs" :key="i" :index="threeItem.index">
-                                    {{ threeItem.title }}</el-menu-item>
-                            </el-submenu>
-                            <el-menu-item v-else :index="subItem.index" :key="subItem.index">{{ subItem.title }}
-                            </el-menu-item>
-                        </template> -->
                     </el-submenu>
                 </template>
                 <template v-else>
@@ -35,12 +26,15 @@
 import { computed } from "vue";
 import { useStore } from "vuex";
 import { useRoute } from "vue-router";
-import { HomeFilled, UserFilled, Notebook } from '@element-plus/icons-vue'
+import { HomeFilled, UserFilled, Notebook, Comment } from '@element-plus/icons-vue'
+import { ElSubMenu } from 'element-plus'
 export default {
     components: {
         HomeFilled,
         UserFilled,
-        Notebook
+        Notebook,
+        ElSubMenu,
+        Comment
     },
     setup() {
         const items = [
@@ -58,12 +52,16 @@ export default {
                 icon: "Notebook",
                 index: "/article",
                 title: "文章管理",
+            },
+            {
+                icon: "Comment",
+                index: "/comment",
+                title: "评论管理",
             }
         ];
 
-        const route = useRoute();      
+        const route = useRoute();
         const onRoutes = computed(() => {
-            console.log(route.path)
             return route.path;
         });
 

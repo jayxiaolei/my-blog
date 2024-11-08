@@ -27,7 +27,7 @@
                         </div>
                     </div>
                     <div class="card-footer">
-                        <span class="footer-content">数据算法与结构</span>
+                        <span class="footer-content">{{ item.category }}</span>
                     </div>
                 </div>
             </div>

@@ -49,8 +49,8 @@ export default {
     setup() {
         const router = useRouter()
         const param = reactive({
-            username: 'jay',
-            password: 'jxl19971231',
+            username: 'ajin',
+            password: 'Ajin971231',
         })
 
         const rules = {
@@ -73,7 +73,7 @@ export default {
                         if (status === 200) {
                             localStorage.setItem('x-token', data.token)
                             ElMessage.success('登录成功')
-                            router.push('/')
+                            router.push('/home')
                         } 
                     })
                     .catch(err => {
