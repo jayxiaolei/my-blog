@@ -3,15 +3,9 @@
         <div class="header">
             <div class="blog-img">
                 <Nav />
-                <ElButton
-                    round
-                    size="large"
-                    class="read-content"
-                    @click="readContent"
-                    >点击阅读</ElButton
-                >
+                <ElButton round size="large" class="read-content" @click="readContent">点击阅读</ElButton>
             </div>
-        </div> 
+        </div>
         <main>
             <Main ref="main" />
         </main>
@@ -21,11 +15,11 @@
 </template>
 
 <script>
-import Nav from '_c/nav.vue'
-import Main from '_c/main.vue'
-import Footer from '_c/footer.vue'
-import { ElButton, ElMessage } from 'element-plus'
-import { ref } from 'vue'
+import Nav from '_c/nav.vue';
+import Main from '_c/main.vue';
+import Footer from '_c/footer.vue';
+import { ElButton, ElMessage } from 'element-plus';
+import { ref } from 'vue';
 // import { loginUser } from '_ax/login.js'
 export default {
     components: {
@@ -33,23 +27,22 @@ export default {
         Nav,
         ElButton,
         Main,
-        ElMessage
+        ElMessage,
     },
     methods: {
         showAnimation() {
-            this.$refs.main.showContent()
+            this.$refs.main.showContent();
         },
     },
     setup() {
-        const scrollTop = ref(0)
+        const scrollTop = ref(0);
         const readContent = () => {
-            document.documentElement.scrollTop =
-                document.documentElement.clientHeight
-        }
+            document.documentElement.scrollTop = document.documentElement.clientHeight;
+        };
         const param = {
             username: 'jay',
-            password: 'jxl19971231'
-        }
+            password: 'jxl19971231',
+        };
         // loginUser(param)
         //     .then(({ data, status }) => {
         //         if (status === 200) {
@@ -63,9 +56,9 @@ export default {
         return {
             scrollTop,
             readContent,
-        }
+        };
     },
-}
+};
 </script>
 
 <style lang="scss" scoped>
@@ -126,4 +119,5 @@ export default {
         transform: translateY(1px);
     }
 }
-</style>>
+</style>
+>
