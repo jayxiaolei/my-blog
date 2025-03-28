@@ -16,7 +16,7 @@
             >
                 <div class="card">
                     <div class="content-img">
-                        <img :src="item.article_img" alt="" />
+                        <img :src="item.article_img || defaultImg" alt="" />
                         <span class="img-detail">{{ item.article_title }}</span>
                     </div>
                     <div class="content-detail">
@@ -36,57 +36,57 @@
 </template>
 
 <script>
-import { reactive, computed, onMounted } from 'vue'
-import { useStore } from 'vuex'
-import { getArticleList } from '_ax/article.js'
-import moment from 'moment'
+import { reactive, computed, onMounted, ref } from 'vue';
+import { useStore } from 'vuex';
+import { getArticleList } from '_ax/article.js';
+import moment from 'moment';
 export default {
     setup() {
-        const reactList = reactive([])
-        const store = useStore()
-        let scrollTop = computed(() => store.state.scrollTop)
+        const reactList = reactive([]);
+        const store = useStore();
+        const defaultImg = ref('https://imgs.699pic.com/images/601/257/313.jpg!seo.v1');
+        let scrollTop = computed(() => store.state.scrollTop);
 
         onMounted(() => {
-            getArticleList()
-            .then(({ data }) => {
-                data.map(item => {
-                    item.isShow = false
-                    return item
-                })
+            getArticleList().then(({ data }) => {
+                data.map((item) => {
+                    item.isShow = false;
+                    return item;
+                });
 
-                reactList.splice(0)
-                reactList.push(...data)
-
-            })
-        })
+                reactList.splice(0);
+                reactList.push(...data);
+            });
+        });
         return {
             reactList,
             scrollTop,
-            moment
-        }
+            moment,
+            defaultImg,
+        };
     },
     methods: {
         showContent() {
-            let clientHeight = document.documentElement.clientHeight
+            let clientHeight = document.documentElement.clientHeight;
             this.$refs.cardWrap.forEach((item, index) => {
                 if (clientHeight - item.getBoundingClientRect().top > 30) {
-                    this.reactList[index].isShow = true
+                    this.reactList[index].isShow = true;
                 } else {
-                    this.reactList[index].isShow = false
+                    this.reactList[index].isShow = false;
                 }
-            })
+            });
         },
         readArticle(item) {
-            let path = '/article/' + item.id
-            this.$router.push(path)
-        }
+            let path = '/article/' + item.id;
+            this.$router.push(path);
+        },
     },
     watch: {
-        'scrollTop'() {
-            this.showContent()
-        }
-    }
-}
+        scrollTop() {
+            this.showContent();
+        },
+    },
+};
 </script>
 
 <style lang="scss" scoped>
@@ -150,7 +150,9 @@ export default {
     background: white;
     text-align: center;
     border-radius: 10px;
-    box-shadow: 0 15px 35px rgb(50 50 93 / 10%), 0 5px 15px rgb(0 0 0 / 7%) !important;
+    box-shadow:
+        0 15px 35px rgb(50 50 93 / 10%),
+        0 5px 15px rgb(0 0 0 / 7%) !important;
     margin: 20px 0;
 }
 
@@ -231,4 +233,5 @@ export default {
     opacity: 1;
     transform: translate(0) scale(1);
 }
-</style>>
+</style>
+>

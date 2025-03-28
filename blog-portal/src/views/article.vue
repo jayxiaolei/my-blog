@@ -7,17 +7,9 @@
         <h1 class="article-title">文章题目</h1>
         <div class="article-main">
             <article class="article-content article-box">
-                <v-md-preview
-                    :text="text"
-                    height="400px"
-                    ref="preview"
-                    :include-level="[3, 4]"
-                ></v-md-preview>
+                <v-md-preview :text="text" height="400px" ref="preview" :include-level="[3, 4]"></v-md-preview>
             </article>
-            <nav
-                class="article-nav article-box"
-                :class="{ 'nav-fix': scrollTop >= 130 }"
-            >
+            <nav class="article-nav article-box" :class="{ 'nav-fix': scrollTop >= 130 }">
                 <div class="nav-title">
                     <ElIcon size="1.5rem" style="vertical-align: middle">
                         <Tickets />
@@ -49,15 +41,15 @@
 </template>
 
 <script>
-import { reactive, computed, watch, ref } from 'vue'
-import Nav from '_c/nav.vue'
-import Footer from '_c/footer.vue'
-import { ElIcon } from 'element-plus'
-import { Tickets } from '@element-plus/icons-vue'
-import { useStore } from 'vuex'
-import Comment from '_c/comment.vue'
-import { getArticleDetail, getComments } from '_ax/article'
-import { useRoute } from 'vue-router'
+import { reactive, computed, watch, ref } from 'vue';
+import Nav from '_c/nav.vue';
+import Footer from '_c/footer.vue';
+import { ElIcon } from 'element-plus';
+import { Tickets } from '@element-plus/icons-vue';
+import { useStore } from 'vuex';
+import Comment from '_c/comment.vue';
+import { getArticleDetail, getComments } from '_ax/article';
+import { useRoute } from 'vue-router';
 export default {
     components: {
         Nav,
@@ -67,27 +59,24 @@ export default {
         Footer,
     },
     setup() {
-        const text = ref('')
-        const commentList = ref([])
+        const text = ref('');
+        const commentList = ref([]);
         const titles = reactive({
             arr: [],
-        })
-        const route = useRoute()
-        const store = useStore()
-        let scrollTop = computed(() => store.state.scrollTop)
+        });
+        const route = useRoute();
+        const store = useStore();
+        let scrollTop = computed(() => store.state.scrollTop);
         const isArrive = (item, next) => {
             if (!next && item.top <= store.state.scrollTop) {
-                item.isArrive = true
-                return item.isArrive
-            } else if (
-                store.state.scrollTop >= item.top &&
-                store.state.scrollTop < next.top
-            ) {
-                item.isArrive = true
-                return true
+                item.isArrive = true;
+                return item.isArrive;
+            } else if (store.state.scrollTop >= item.top && store.state.scrollTop < next.top) {
+                item.isArrive = true;
+                return true;
             } else {
-                item.isArrive = false
-                return false
+                item.isArrive = false;
+                return false;
             }
         };
 
@@ -97,83 +86,72 @@ export default {
 
         getCommentLists();
         function getCommentLists() {
-            getComments({ article_id: route.params.id })
-            .then(({ data }) => {
-                commentList.value = data
+            getComments({ article_id: route.params.id }).then(({ data }) => {
+                commentList.value = data;
             });
         }
 
         watch(
             () => store.state.scrollTop,
-            newV => {
+            (newV) => {
                 titles.arr.forEach((item, index) => {
                     if (index === titles.arr.length - 1 && newV >= item.top) {
-                        item.isArrive = true
-                    } else if (
-                        newV >= item.top &&
-                        newV < titles.arr[index + 1].top
-                    ) {
-                        item.isArrive = true
+                        item.isArrive = true;
+                    } else if (newV >= item.top && newV < titles.arr[index + 1].top) {
+                        item.isArrive = true;
                     } else {
-                        item.isArrive = false
+                        item.isArrive = false;
                     }
-                })
+                });
             },
-        )
+        );
         return {
             text,
             titles,
             scrollTop,
             isArrive,
             commentList,
-            refreshComments
-        }
+            refreshComments,
+        };
     },
     mounted() {
         getArticleDetail({ id: this.$route.params.id }).then(({ data }) => {
-            this.text = data.article_content
+            this.text = data.article_content;
             this.$nextTick(() => {
-                const anchors =
-                    this.$refs.preview.$el.querySelectorAll('h1,h2,h3,h4,h5,h6')
-                const titles = Array.from(anchors).filter(
-                    title => !!title.innerText.trim(),
-                )
+                const anchors = this.$refs.preview.$el.querySelectorAll('h1,h2,h3,h4,h5,h6');
+                const titles = Array.from(anchors).filter((title) => !!title.innerText.trim());
                 if (!titles.length) {
-                    this.titles = []
-                    return
+                    this.titles = [];
+                    return;
                 }
-                const hTags = Array.from(
-                    new Set(titles.map(title => title.tagName)),
-                ).sort()
+                const hTags = Array.from(new Set(titles.map((title) => title.tagName))).sort();
 
-                this.titles.arr = titles.map(el => ({
+                this.titles.arr = titles.map((el) => ({
                     title: el.innerText,
                     lineIndex: el.getAttribute('data-v-md-line'),
                     indent: hTags.indexOf(el.tagName),
                     top: el.getBoundingClientRect().top - 80,
-                }))
-            })
-        })
+                }));
+            });
+        });
     },
     methods: {
         handleAnchorClick(anchor) {
-            const { preview } = this.$refs
-            const { lineIndex } = anchor
+            const { preview } = this.$refs;
+            const { lineIndex } = anchor;
 
-            const heading = preview.$el.querySelector(
-                `[data-v-md-line="${lineIndex}"]`,
-            )
+            const heading = preview.$el.querySelector(`[data-v-md-line="${lineIndex}"]`);
 
             if (heading) {
                 preview.scrollToTarget({
                     target: heading,
                     scrollContainer: window,
                     top: 60,
-                })
+                });
             }
         },
     },
-}
+};
 </script>
 
 <style lang="scss" scoped>
@@ -185,7 +163,9 @@ export default {
 
 .article-box {
     border-radius: 10px;
-    box-shadow: 0 10px 35px 2px rgb(0 0 0 / 15%), 0 5px 15px rgb(0 0 0 / 7%),
+    box-shadow:
+        0 10px 35px 2px rgb(0 0 0 / 15%),
+        0 5px 15px rgb(0 0 0 / 7%),
         0 2px 5px -5px rgb(0 0 0 / 10%);
     transition-delay: 0.2s;
     transition-duration: 1s;

@@ -16,6 +16,9 @@ export default defineConfig({
       '_ax': path.resolve(__dirname, 'src/axios')
     }
   },
+  build: {
+    sourcemap: true
+  }
   // 服务代理配置
   // server: {
   //   port: 1231,

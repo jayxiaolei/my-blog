@@ -4,6 +4,7 @@ const app = express();
 const joi = require('joi');
 const expressJwt = require('express-jwt');
 const config = require('./config');
+// const bcrypt = require('bcryptjs')
 
 app.use((req, res, next) => {
     res.cc = (err, status = 1) => {
@@ -14,6 +15,7 @@ app.use((req, res, next) => {
     }
     next()
 })
+
 // 配置登录的token
 app.use(expressJwt({secret: config.secretKey}).unless({path: [/^\/api\/blog/]}))
 

@@ -1,4 +1,4 @@
-const joi = require('joi')
+const joi = require('joi');
 
 /**
  * string() 值必须是字符串
@@ -8,60 +8,67 @@ const joi = require('joi')
  * required() 必填
  * pattern(正则表达式) 值必须符合正则表达式的规则
  */
-const username = joi.string().alphanum().min(1).max(10).required()
-const password = joi.string().pattern(/^[\S]{6,12}$/).required()
-const userId = joi.number().required()
-const articleTitle = joi.string().required()
-const articleContent = joi.string().required()
-const id = joi.number().required()
-const commonStr = joi.string().pattern(/^[\S]{0,100}$/).required()
-const parentId = joi.number()
-const normalObject = joi.object().allow(null)
+const username = joi.string().alphanum().min(1).max(10).required();
+const password = joi
+    .string()
+    .pattern(/^[\S]{6,12}$/)
+    .required();
+const userId = joi.number().required();
+const articleTitle = joi.string().required();
+const articleContent = joi.string().required();
+const id = joi.number().required();
+const commonStr = joi
+    .string()
+    .pattern(/^[\S]{0,100}$/)
+    .required();
+const parentId = joi.number();
+const normalObject = joi.object().allow(null);
 
 exports.reg_login_schema = {
     body: {
-        username, password
-    }
-}
+        username,
+        password,
+    },
+};
 
 exports.delete_user = {
     body: {
-        user_id: userId
-    }
-}
+        user_id: userId,
+    },
+};
 
 exports.write_article = {
     body: {
         article_title: articleTitle,
-        article_content: articleContent
-    }
-}
+        article_content: articleContent,
+    },
+};
 
 exports.get_detail = {
     query: {
-        id
-    }
-}
+        id,
+    },
+};
 
 exports.delete_article = {
     body: {
-        id
-    }
-}
+        id,
+    },
+};
 
 exports.edit_article = {
     body: {
         id,
         article_title: articleTitle,
-        article_content: articleContent
-    }
-}
+        article_content: articleContent,
+    },
+};
 
 exports.get_comments = {
     params: {
-        article_id: id
-    }
-}
+        article_id: id,
+    },
+};
 
 exports.write_comment = {
     body: {
@@ -70,12 +77,12 @@ exports.write_comment = {
         name: commonStr,
         content: articleContent,
         parent_id: parentId,
-        target_user: normalObject
-    }
-}
+        target_user: normalObject,
+    },
+};
 
 exports.praise_comment = {
     body: {
-        id: id
-    }
-}
+        id: id,
+    },
+};
