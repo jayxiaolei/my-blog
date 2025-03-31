@@ -7,9 +7,18 @@ module.exports = {
     },
     extends: [
         'eslint:recommended', // 使用 ESLint 推荐的基本规则
-        'plugin:vue/vue3-recommended', // 使用 Vue 3 推荐的规则 (根据你的 Vue 版本选择 vue3-essential, vue3-strongly-recommended, 或 vue3-recommended)
+        'plugin:import/recommended',
+        // 'plugin:vue/vue3-recommended', // 使用 Vue 3 推荐的规则 (根据你的 Vue 版本选择 vue3-essential, vue3-strongly-recommended, 或 vue3-recommended)
         'plugin:prettier/recommended', // **重要：** 启用 eslint-plugin-prettier 和 eslint-config-prettier，确保这个是 extends 数组的最后一个
     ],
+    settings: {
+        'import/resolver': {
+            alias: {
+                extensions: ['.js', '.json', '.vue'],
+            },
+        },
+    },
+    parser: 'vue-eslint-parser',
     parserOptions: {
         ecmaVersion: 'latest', // 使用最新的 ECMAScript 版本
         sourceType: 'module', // 使用 ES Modules
@@ -19,7 +28,7 @@ module.exports = {
         // 'prettier' 插件已由 'plugin:prettier/recommended' 包含并配置
     ],
     rules: {
-        'compat/compat': 'warn',
+        // 'compat/compat': 'warn',
         'no-debugger': process.env.NODE_ENV === 'production' ? 2 : 0,
         'new-cap': [2, { capIsNew: false, newIsCapExceptions: ['mitt'] }],
         'max-depth': [0, 5],

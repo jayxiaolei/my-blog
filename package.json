@@ -1,0 +1,44 @@
+{
+    "name": "my-blog",
+    "version": "1.0.0",
+    "description": "",
+    "private": true,
+    "main": ".eslintrc.js",
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1",
+        "prepare": "husky install",
+        "lint:fix": "eslint --ext .js,.cjs,.mjs,.vue --fix ."
+    },
+    "lint-staged": {
+        "**/*.{js,vue}": [
+            "eslint --fix",
+            "prettier --ignore-unknown --write"
+        ],
+        "**/*.{json,css,scss,md}": [
+            "prettier --write"
+        ]
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/jayxiaolei/my-blog.git"
+    },
+    "keywords": [],
+    "author": "",
+    "license": "ISC",
+    "bugs": {
+        "url": "https://github.com/jayxiaolei/my-blog/issues"
+    },
+    "homepage": "https://github.com/jayxiaolei/my-blog#readme",
+    "devDependencies": {
+        "eslint": "^8.57.1",
+        "eslint-config-prettier": "^10.1.1",
+        "eslint-import-resolver-alias": "^1.1.2",
+        "eslint-plugin-import": "^2.31.0",
+        "eslint-plugin-prettier": "^5.2.5",
+        "eslint-plugin-vue": "^10.0.0",
+        "husky": "^8.0.0",
+        "lint-staged": "^15.5.0",
+        "prettier": "^3.5.3",
+        "vue-eslint-parser": "^10.1.1"
+    }
+}
