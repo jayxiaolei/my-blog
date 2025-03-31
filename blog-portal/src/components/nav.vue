@@ -21,7 +21,7 @@
                     </span>
                     <template #dropdown>
                         <el-dropdown-menu>
-                            <el-dropdown-item v-for="(item, index) in navList" :icon="item.logo" :command="item" ::key="item.text"
+                            <el-dropdown-item v-for="(item, index) in navList" :key="index" :icon="item.logo" :command="item"
                                 >{{ item.text }}
                             </el-dropdown-item>
                         </el-dropdown-menu>

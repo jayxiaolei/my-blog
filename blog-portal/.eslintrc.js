@@ -7,6 +7,8 @@ module.exports = {
                     ['@', './src'],
                     ['_v', './src/views'],
                     ['_c', './src/components'],
+                    ['_ax', './src/axios'],
+                    ['_a', './src/assets'],
                 ],
                 extensions: ['.js', '.json', '.vue'],
             },

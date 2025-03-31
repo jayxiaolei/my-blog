@@ -25,7 +25,6 @@ module.exports = {
     },
     plugins: [
         'vue', // 启用 vue 插件 （虽然 'plugin:vue/vue3-recommended' 包含了它，显式写出有时更清晰）
-        // 'prettier' 插件已由 'plugin:prettier/recommended' 包含并配置
     ],
     rules: {
         // 'compat/compat': 'warn',
@@ -57,7 +56,7 @@ module.exports = {
         // should be fixed in high priority
         'no-var': 1,
         'prefer-const': 1,
-        'one-var': 1,
+        'one-var': 0,
         'no-inner-declarations': 1,
         'max-params': [
             1,
@@ -79,26 +78,26 @@ module.exports = {
                 defineExposeLast: true,
             },
         ],
-        'import/order': [
-            1,
-            {
-                'newlines-between': 'always',
-                pathGroups: [
-                    {
-                        // Minimatch pattern used to match against specifiers
-                        pattern: '@/**',
-                        // The predefined group this PathGroup is defined in relation to
-                        group: 'external',
-                        // How matching imports will be positioned relative to "group"
-                        position: 'after',
-                    },
-                ],
-                alphabetize: {
-                    order: 'asc',
-                    caseInsensitive: true,
-                },
-            },
-        ],
+        // 'import/order': [
+        //     1,
+        //     {
+        //         'newlines-between': 'always',
+        //         pathGroups: [
+        //             {
+        //                 // Minimatch pattern used to match against specifiers
+        //                 pattern: '@/**',
+        //                 // The predefined group this PathGroup is defined in relation to
+        //                 group: 'external',
+        //                 // How matching imports will be positioned relative to "group"
+        //                 position: 'after',
+        //             },
+        //         ],
+        //         alphabetize: {
+        //             order: 'asc',
+        //             caseInsensitive: true,
+        //         },
+        //     },
+        // ],
     },
     // globals: {
     //     // 如果你使用了一些全局变量 (例如来自 <script setup>)，可以在这里定义

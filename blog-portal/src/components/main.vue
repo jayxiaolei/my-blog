@@ -7,10 +7,10 @@
 
         <div class="article-content">
             <div
-                class="card-wrap aos-animate"
                 v-for="(item, index) in reactList"
                 :key="index"
                 ref="cardWrap"
+                class="card-wrap aos-animate"
                 :class="{ 'show-item': item.isShow }"
                 @click="readArticle(item)"
             >
@@ -45,7 +45,7 @@ export default {
         const reactList = reactive([]);
         const store = useStore();
         const defaultImg = ref('https://imgs.699pic.com/images/601/257/313.jpg!seo.v1');
-        let scrollTop = computed(() => store.state.scrollTop);
+        const scrollTop = computed(() => store.state.scrollTop);
 
         onMounted(() => {
             getArticleList().then(({ data }) => {
@@ -65,9 +65,14 @@ export default {
             defaultImg,
         };
     },
+    watch: {
+        scrollTop() {
+            this.showContent();
+        },
+    },
     methods: {
         showContent() {
-            let clientHeight = document.documentElement.clientHeight;
+            const clientHeight = document.documentElement.clientHeight;
             this.$refs.cardWrap.forEach((item, index) => {
                 if (clientHeight - item.getBoundingClientRect().top > 30) {
                     this.reactList[index].isShow = true;
@@ -77,13 +82,8 @@ export default {
             });
         },
         readArticle(item) {
-            let path = '/article/' + item.id;
+            const path = '/article/' + item.id;
             this.$router.push(path);
-        },
-    },
-    watch: {
-        scrollTop() {
-            this.showContent();
         },
     },
 };

@@ -1,6 +1,6 @@
 export const throttle = (fn, delay) => {
     let valid = true;
-    return function() {
+    return function () {
         if (!valid) {
             return false;
         }
@@ -8,16 +8,16 @@ export const throttle = (fn, delay) => {
         setTimeout(() => {
             fn();
             valid = true;
-        }, delay)
-    }
-}
+        }, delay);
+    };
+};
 
 export const debounce = (fn, delay) => {
-    let timer = null
+    let timer = null;
     return () => {
-        if(timer) {
-            clearTimeout(timer)
+        if (timer) {
+            clearTimeout(timer);
         }
-        timer = setTimeout(fn, delay)
-    }
-}
+        timer = setTimeout(fn, delay);
+    };
+};

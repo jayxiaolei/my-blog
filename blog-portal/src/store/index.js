@@ -1,14 +1,14 @@
-import {createStore} from 'vuex'
+import { createStore } from 'vuex';
 
 export default createStore({
     state: {
-        scrollTop: 0
+        scrollTop: 0,
     },
     mutations: {
         getScrollTop(state) {
-            state.scrollTop = document.documentElement.scrollTop
-        }
+            state.scrollTop = document.documentElement.scrollTop;
+        },
     },
     actions: {},
-    modules: {}
-})
+    modules: {},
+});

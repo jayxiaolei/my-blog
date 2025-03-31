@@ -1,15 +1,15 @@
-import {createRouter, createWebHashHistory} from "vue-router";
+import { createRouter, createWebHashHistory } from 'vue-router';
 
 const routes = [
     {
         path: '/',
-        redirect: '/index'
+        redirect: '/index',
     },
     {
         path: '/index',
         name: 'Home',
         meta: {
-            title: '首页'
+            title: '首页',
         },
         component: () => import('_v/home.vue'),
     },
@@ -17,29 +17,29 @@ const routes = [
         path: '/article/:id',
         name: 'Article',
         meta: {
-            title: '文章'
+            title: '文章',
         },
-        component: () => import ('_v/article.vue')
+        component: () => import('_v/article.vue'),
     },
     {
         path: '/photowall',
         name: 'PhotoWall',
         meta: {
-            title: '照片墙'
+            title: '照片墙',
         },
-        component: () => import ('_v/photoWall.vue')
-    }
-]
+        component: () => import('_v/photoWall.vue'),
+    },
+];
 
 const router = createRouter({
     history: createWebHashHistory(),
-    routes
+    routes,
 });
 
 router.beforeEach((to, from, next) => {
-    document.documentElement.scrollTop = 0
+    document.documentElement.scrollTop = 0;
     document.title = `${to.meta.title} | 阿金`;
-    next()
+    next();
 });
 
 export default router;

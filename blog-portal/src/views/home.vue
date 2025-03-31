@@ -29,20 +29,15 @@ export default {
         Main,
         ElMessage,
     },
-    methods: {
-        showAnimation() {
-            this.$refs.main.showContent();
-        },
-    },
     setup() {
         const scrollTop = ref(0);
         const readContent = () => {
             document.documentElement.scrollTop = document.documentElement.clientHeight;
         };
-        const param = {
-            username: 'jay',
-            password: 'jxl19971231',
-        };
+        // const param = {
+        //     username: 'jay',
+        //     password: 'jxl19971231',
+        // };
         // loginUser(param)
         //     .then(({ data, status }) => {
         //         if (status === 200) {
@@ -57,6 +52,11 @@ export default {
             scrollTop,
             readContent,
         };
+    },
+    methods: {
+        showAnimation() {
+            this.$refs.main.showContent();
+        },
     },
 };
 </script>
