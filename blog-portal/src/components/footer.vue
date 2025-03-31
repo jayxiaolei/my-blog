@@ -1,9 +1,7 @@
 <template>
-    <footer class="footer" ref="main1">
+    <footer ref="main1" class="footer">
         <span>
-            <el-icon color="#ccc" :size="14" class="footer-icon"
-                ><Avatar
-            /></el-icon>
+            <el-icon color="#ccc" :size="14" class="footer-icon"><Avatar /></el-icon>
             总访问量:1111
         </span>
         <span>qq: 1227819030</span>
@@ -11,14 +9,14 @@
 </template>
 
 <script>
-import { ElIcon } from 'element-plus'
-import { Avatar } from '@element-plus/icons-vue'
+import { Avatar } from '@element-plus/icons-vue';
+import { ElIcon } from 'element-plus';
 export default {
     components: {
         Avatar,
-        ElIcon
+        ElIcon,
     },
-}
+};
 </script>
 
 <style lang="scss" scoped>
@@ -27,7 +25,7 @@ export default {
     width: 100%;
     background-image: linear-gradient(to right, #0b0c0b 0%, #050505 100%);
     color: #ccc;
-    opacity: .8;
+    opacity: 0.8;
     margin-top: 20px;
     display: flex;
     justify-content: center;
