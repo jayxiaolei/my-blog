@@ -7,29 +7,14 @@
         </div>
         <main class="img-wrap">
             <div class="column">
-                <img
-                    class="item"
-                    :src="imgArr[i].img"
-                    :key="i"
-                    v-for="i in left"
-                />
+                <img v-for="i in left" :key="i" class="item" :src="imgArr[i].img" />
             </div>
             <div class="column">
-                <img
-                    class="item"
-                    :src="imgArr[i].img"
-                    :key="i"
-                    v-for="i in middle"
-                />
+                <img v-for="i in middle" :key="i" class="item" :src="imgArr[i].img" />
             </div>
-            
-            <div class="column" v-if="clientWidth >= 993">
-                <img
-                    class="item"
-                    :src="imgArr[i].img"
-                    :key="i"
-                    v-for="i in right"
-                />
+
+            <div v-if="clientWidth >= 993" class="column">
+                <img v-for="i in right" :key="i" class="item" :src="imgArr[i].img" />
             </div>
         </main>
 
@@ -38,117 +23,109 @@
 </template>
 
 <script>
-import Nav from '_c/nav.vue'
-import imgArr from '_a/img.json'
-import { throttle } from '_a/index.js'
-import { onMounted, reactive, ref } from 'vue'
-import Footer from '_c/footer.vue'
+import imgArr from '_a/img.json';
+import { throttle } from '_a/index.js';
+import Footer from '_c/footer.vue';
+import Nav from '_c/nav.vue';
+import { onMounted, reactive, ref } from 'vue';
 export default {
     components: {
         Nav,
-        Footer
+        Footer,
     },
     setup() {
-        let left = reactive([]),
+        const left = reactive([]),
             middle = reactive([]),
-            right = reactive([])
-        let clientWidth = ref(document.documentElement.clientWidth)
-        const loadImgHeights = imgs => {
-            return new Promise((resolve, reject) => {
-                const clientWidth =
-                    document.documentElement.clientWidth * 0.9 >= 1125
-                        ? 1125
-                        : document.documentElement.clientWidth * 0.9
-                const num = document.documentElement.clientWidth >= 993 ? 3 : 2
-                const length = imgs.length
-                const heights = []
-                const load = index => {
-                    let img = new Image()
-                    const checkIfFinished = () => {
-                        if (index === length - 1) {
-                            resolve(heights)
+            right = reactive([]),
+            clientWidth = ref(document.documentElement.clientWidth),
+            loadImgHeights = (imgs) => {
+                return new Promise((resolve) => {
+                    const clientWidth = document.documentElement.clientWidth * 0.9 >= 1125 ? 1125 : document.documentElement.clientWidth * 0.9,
+                        num = document.documentElement.clientWidth >= 993 ? 3 : 2,
+                        length = imgs.length,
+                        heights = [],
+                        load = (index) => {
+                            const img = new Image(),
+                                checkIfFinished = () => {
+                                    if (index === length - 1) {
+                                        resolve(heights);
+                                    }
+                                };
+                            img.onload = () => {
+                                const ratio = img.height / img.width,
+                                    perHeight = ratio * (clientWidth / num);
+                                heights[index] = perHeight;
+                                checkIfFinished();
+                            };
+
+                            img.onerror = () => {
+                                heights[index] = 0;
+                                checkIfFinished();
+                            };
+                            img.src = imgs[index].img;
+                        };
+
+                    imgs.forEach((img, index) => load(index));
+                });
+            },
+            greedy = (heights) => {
+                const clientWidth = document.documentElement.clientWidth;
+                let leftHeight = 0,
+                    midHeight = 0,
+                    rightHeight = 0;
+                left.splice(0);
+                middle.splice(0);
+                right.splice(0);
+
+                if (clientWidth >= 993) {
+                    heights.forEach((height, index) => {
+                        if (leftHeight >= rightHeight && midHeight >= rightHeight) {
+                            right.push(index);
+                            rightHeight += height;
+                        } else if (rightHeight >= leftHeight && midHeight >= leftHeight) {
+                            left.push(index);
+                            leftHeight += height;
+                        } else {
+                            middle.push(index);
+                            midHeight += height;
                         }
-                    }
-                    img.onload = () => {
-                        const ratio = img.height / img.width
-                        const perHeight = ratio * (clientWidth / num)
-                        heights[index] = perHeight
-                        checkIfFinished()
-                    }
-
-                    img.onerror = () => {
-                        heights[index] = 0
-                        checkIfFinished()
-                    }
-                    img.src = imgs[index].img
+                    });
+                } else {
+                    heights.forEach((height, index) => {
+                        if (leftHeight >= midHeight) {
+                            middle.push(index);
+                            midHeight += height;
+                        } else {
+                            left.push(index);
+                            leftHeight += height;
+                        }
+                    });
                 }
-
-                imgs.forEach((img, index) => load(index))
-            })
-        }
-
-        let greedy = heights => {
-            const clientWidth = document.documentElement.clientWidth
-            let leftHeight = 0
-            let midHeight = 0
-            let rightHeight = 0
-            left.splice(0)
-            middle.splice(0)
-            right.splice(0)
-
-            if (clientWidth >= 993) {
-                heights.forEach((height, index) => {
-                    if (leftHeight >= rightHeight && midHeight >= rightHeight) {
-                        right.push(index)
-                        rightHeight += height
-                    } else if (
-                        rightHeight >= leftHeight &&
-                        midHeight >= leftHeight
-                    ) {
-                        left.push(index)
-                        leftHeight += height
-                    } else {
-                        middle.push(index)
-                        midHeight += height
-                    }
-                })
-            } else {
-                heights.forEach((height, index) => {
-                    if (leftHeight >= midHeight) {
-                        middle.push(index)
-                        midHeight += height
-                    } else {
-                        left.push(index)
-                        leftHeight += height
-                    }
-                })
-            }
-        }
-
-        const getIndex = () => {
-            loadImgHeights(imgArr).then(data => {
-                greedy(data)
-            })
-        }
+            },
+            getIndex = () => {
+                loadImgHeights(imgArr).then((data) => {
+                    greedy(data);
+                });
+            };
 
         onMounted(() => {
-            getIndex()
-        })
+            getIndex();
+        });
 
         window.onresize = throttle(() => {
-            getIndex()
-            clientWidth.value = document.documentElement.clientWidth
-        }, 400)
+            getIndex();
+            clientWidth.value = document.documentElement.clientWidth;
+        }, 400);
 
         return {
             left,
             middle,
             right,
             imgArr,
-            clientWidth
-        }
+            clientWidth,
+        };
     },
-}
+};
 </script>
 
 <style scoped lang="scss">
