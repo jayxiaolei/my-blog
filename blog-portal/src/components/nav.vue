@@ -3,11 +3,7 @@
         <div class="nav-content container">
             <img fetchpriority="high" src="../assets/jay.webp" alt="logo" class="logo" />
             <ul class="nav-menu">
-                <li
-                    class="nav-item"
-                    v-for="(item, index) in navList"
-                    :key="index"
-                >
+                <li v-for="(item, index) in navList" :key="index" class="nav-item">
                     <el-icon color="white" :size="20" class="nva-icon">
                         <component :is="item.logo"></component>
                     </el-icon>
@@ -25,7 +21,9 @@
                     </span>
                     <template #dropdown>
                         <el-dropdown-menu>
-                            <el-dropdown-item v-for="(item, index) in navList" :icon="item.logo" :command="item">{{ item.text}} </el-dropdown-item>
+                            <el-dropdown-item v-for="(item, index) in navList" :icon="item.logo" :command="item" ::key="item.text"
+                                >{{ item.text }}
+                            </el-dropdown-item>
                         </el-dropdown-menu>
                     </template>
                 </el-dropdown>
@@ -35,17 +33,12 @@
 </template>
 
 <script>
-import { HomeFilled, Briefcase, Camera } from '@element-plus/icons-vue'
-import {
-    ElIcon,
-    ElDropdown,
-    ElDropdownMenu,
-    ElDropdownItem,
-} from 'element-plus'
-import { useStore } from 'vuex'
-import { throttle } from '_a/index.js'
-import { computed } from 'vue'
-import { useRouter } from 'vue-router'
+import { HomeFilled, Briefcase, Camera } from '@element-plus/icons-vue';
+import { throttle } from '_a/index.js';
+import { ElIcon, ElDropdown, ElDropdownMenu, ElDropdownItem } from 'element-plus';
+import { computed } from 'vue';
+import { useRouter } from 'vue-router';
+import { useStore } from 'vuex';
 export default {
     components: {
         HomeFilled,
@@ -54,38 +47,38 @@ export default {
         ElDropdown,
         ElDropdownMenu,
         ElDropdownItem,
-        Camera
+        Camera,
     },
     setup() {
         const navList = [
-            {
-                text: '首页',
-                logo: HomeFilled,
-                path: '/index',
-            },
-            {
-                text: '照片墙',
-                logo: Camera,
-                path: '/photowall',
-            }
-        ]
-        const store = useStore()
-        let top = computed(() => store.state.scrollTop)
-        const scrollBody = () => {
-            store.commit('getScrollTop')
-        }
-        window.onscroll = throttle(scrollBody, 300)
-        const router = useRouter()
-        const clickDropItem = (item) => {
-            router.push(item.path)
-        }
+                {
+                    text: '首页',
+                    logo: HomeFilled,
+                    path: '/index',
+                },
+                {
+                    text: '照片墙',
+                    logo: Camera,
+                    path: '/photowall',
+                },
+            ],
+            store = useStore(),
+            top = computed(() => store.state.scrollTop),
+            scrollBody = () => {
+                store.commit('getScrollTop');
+            };
+        window.onscroll = throttle(scrollBody, 300);
+        const router = useRouter(),
+            clickDropItem = (item) => {
+                router.push(item.path);
+            };
         return {
             navList,
             top,
-            clickDropItem
-        }
+            clickDropItem,
+        };
     },
-}
+};
 </script>
 
 <style lang="scss" scoped>
@@ -166,4 +159,5 @@ export default {
     background-image: linear-gradient(to right, #0b0c0b 0%, #050505 100%);
     opacity: 0.7;
 }
-</style>>
+</style>
+>
