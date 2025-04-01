@@ -36,10 +36,12 @@
 </template>
 
 <script>
+import moment from 'moment';
 import { reactive, computed, onMounted, ref } from 'vue';
 import { useStore } from 'vuex';
+
 import { getArticleList } from '_ax/article.js';
-import moment from 'moment';
+
 export default {
     setup() {
         const reactList = reactive([]);
