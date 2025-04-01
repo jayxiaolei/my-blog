@@ -8,50 +8,28 @@
                 <el-table-column prop="username" label="用户名" />
                 <el-table-column label="操作" width="200px">
                     <template #default="scope">
-                        <el-button
-                            size="small"
-                            type="danger"
-                            @click="deleteUser(scope.row)"
-                            >删除</el-button
-                        >
+                        <el-button size="small" type="danger" @click="deleteUser(scope.row)">删除</el-button>
                     </template>
                 </el-table-column>
             </el-table>
         </div>
 
         <el-dialog v-model="createDialog" title="新建" width="80%">
-            <el-form
-                ref="registerForm"
-                :model="registerInfo"
-                :rules="rules"
-                label-width="120px"
-                :size="formSize"
-            >
+            <el-form ref="registerForm" :model="registerInfo" :rules="rules" label-width="120px" :size="formSize">
                 <el-form-item prop="username" label="用户名">
-                    <el-input
-                        v-model="registerInfo.username"
-                        placeholder="请输入"
-                    />
+                    <el-input v-model="registerInfo.username" placeholder="请输入" />
                 </el-form-item>
                 <el-form-item prop="password" label="密码">
-                    <el-input
-                        v-model="registerInfo.password"
-                        placeholder="请输入"
-                    />
+                    <el-input v-model="registerInfo.password" placeholder="请输入" />
                 </el-form-item>
                 <el-form-item prop="confirmPassword" label="确认密码">
-                    <el-input
-                        v-model="registerInfo.confirmPassword"
-                        placeholder="请输入"
-                    />
+                    <el-input v-model="registerInfo.confirmPassword" placeholder="请输入" />
                 </el-form-item>
             </el-form>
             <template #footer>
                 <span class="dialog-footer">
                     <el-button @click="createDialog = false">取消</el-button>
-                    <el-button type="primary" @click="submitForm(registerForm)"
-                        >确定</el-button
-                    >
+                    <el-button type="primary" @click="submitForm(registerForm)">确定</el-button>
                 </span>
             </template>
         </el-dialog>
@@ -59,25 +37,25 @@
 </template>
 
 <script>
-import { regUser } from '_ax/login.js'
-import { getUserList, delUser } from '_ax/user.js'
-import { ElMessage, ElMessageBox } from 'element-plus'
-import { reactive, ref } from 'vue'
+import { regUser } from '_ax/login.js';
+import { getUserList, delUser } from '_ax/user.js';
+import { ElMessage, ElMessageBox } from 'element-plus';
+import { reactive, ref } from 'vue';
 export default {
     setup() {
         const validatePassword = (rule, value, callback) => {
             if (value === registerInfo.password) {
-                callback()
+                callback();
             } else {
-                callback('密码必须一致')
+                callback('密码必须一致');
             }
-        }
-        const registerForm = ref()
+        };
+        const registerForm = ref();
         const registerInfo = reactive({
             username: '',
             password: '',
             confirmPassword: '',
-        })
+        });
         const rules = reactive({
             username: [
                 {
@@ -101,46 +79,46 @@ export default {
                 { required: true, message: '请输入', trigger: 'blur' },
                 { validator: validatePassword, trigger: 'blur' },
             ],
-        })
-        const submitForm = formEl => {
-            if (!formEl) return
-            formEl.validate(valid => {
+        });
+        const submitForm = (formEl) => {
+            if (!formEl) return;
+            formEl.validate((valid) => {
                 if (valid) {
                     regUser(registerInfo).then(
                         () => {
-                            ElMessage.success('添加成功')
-                            getList()
-                            createDialog.value = false
+                            ElMessage.success('添加成功');
+                            getList();
+                            createDialog.value = false;
                         },
-                        err => {
-                            ElMessage.error(err)
+                        (err) => {
+                            ElMessage.error(err);
                         },
-                    )
+                    );
                 }
-            })
-        }
-        const userList = reactive([])
-        const createDialog = ref(false)
+            });
+        };
+        const userList = reactive([]);
+        const createDialog = ref(false);
 
         const getList = () => {
             getUserList().then(
                 ({ data }) => {
-                    userList.splice(0)
-                    userList.push(...data.users)
-                    ElMessage.success('获取成功')
+                    userList.splice(0);
+                    userList.push(...data.users);
+                    ElMessage.success('获取成功');
                 },
-                err => {
-                    ElMessage.error(err)
+                (err) => {
+                    ElMessage.error(err);
                 },
-            )
-        }
-        getList()
+            );
+        };
+        getList();
 
         const registerUser = () => {
-            createDialog.value = true
-        }
+            createDialog.value = true;
+        };
 
-        const deleteUser = row => {
+        const deleteUser = (row) => {
             ElMessageBox.confirm('确认删除吗？', '警告', {
                 confirmButtonText: '确认',
                 cancelButtonText: '取消',
@@ -148,15 +126,15 @@ export default {
             }).then(() => {
                 delUser({ user_id: row.id }).then(
                     () => {
-                        ElMessage.success('删除成功')
-                        getList()
+                        ElMessage.success('删除成功');
+                        getList();
                     },
-                    err => {
-                        ElMessage.error(err)
+                    (err) => {
+                        ElMessage.error(err);
                     },
-                )
-            })
-        }
+                );
+            });
+        };
         return {
             userList,
             createDialog,
@@ -166,9 +144,9 @@ export default {
             rules,
             submitForm,
             deleteUser,
-        }
+        };
     },
-}
+};
 </script>
 
 <style lang="scss" scoped>
