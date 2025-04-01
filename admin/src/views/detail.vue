@@ -6,10 +6,11 @@
 </template>
 
 <script>
-import { writeArticle, getArticleDetail, editArticleByID } from '_ax/article.js';
 import { ElMessage } from 'element-plus';
 import { ref, onMounted } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
+
+import { writeArticle, getArticleDetail, editArticleByID } from '_ax/article.js';
 
 export default {
     setup() {
