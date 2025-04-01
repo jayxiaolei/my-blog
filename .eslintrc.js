@@ -48,6 +48,7 @@ module.exports = {
         'import/no-cycle': 2,
         // should be fixed in the highest priority
         'no-undef': 1,
+        'no-console': 1,
         'import/no-unresolved': 1,
         'no-unused-vars': 1,
         'no-invalid-this': 1,

@@ -74,7 +74,6 @@ export default {
         const clickDropItem = (item) => {
             router.push(item.path);
         };
-        console.log(111);
         return {
             navList,
             top,
