@@ -55,7 +55,7 @@ module.exports = {
         'vue/no-mutating-props': 1,
         // should be fixed in high priority
         'no-var': 1,
-        'prefer-const': 1,
+        'prefer-const': 0,
         'one-var': 0,
         'no-inner-declarations': 1,
         'max-params': [
