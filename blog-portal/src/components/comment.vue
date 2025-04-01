@@ -1,6 +1,6 @@
 <template>
     <div>
-        <div class="comment" v-for="item in content" :key="item.id">
+        <div v-for="item in content" :key="item.id" class="comment">
             <div>
                 <ElAvatar fit="cover" :src="item.avatar" />
             </div>
@@ -15,12 +15,12 @@
                         {{ item.content }}
                     </div>
                     <div class="action-box">
-                        <div class="item" @click="givePraise(item)" :class="{ active: item.is_praise }">
-                            <img src="../assets/praise.svg" v-show="!item.is_praise" style="width: 14px" />
-                            <img src="../assets/praise-blue.svg" v-show="item.is_praise" style="width: 14px" />
+                        <div class="item" :class="{ active: item.is_praise }" @click="givePraise(item)">
+                            <img v-show="!item.is_praise" src="../assets/praise.svg" style="width: 14px" />
+                            <img v-show="item.is_praise" src="../assets/praise-blue.svg" style="width: 14px" />
                             {{ item.praise_num ? item.praise_num : '点赞' }}
                         </div>
-                        <div class="item" @click="answerQuestion(item)" :class="{ active: item.is_answer }">
+                        <div class="item" :class="{ active: item.is_answer }" @click="answerQuestion(item)">
                             <ElIcon :size="15">
                                 <ChatDotSquare />
                             </ElIcon>
@@ -29,7 +29,7 @@
                     </div>
                 </div>
                 <div class="subcomment-wrapper">
-                    <div class="comment-form" v-if="item.is_answer">
+                    <div v-if="item.is_answer" class="comment-form">
                         <div class="comment-form-content">
                             <ElInput v-model="textarea" maxlength="100" placeholder="Please input" show-word-limit type="textarea" />
                         </div>
@@ -37,8 +37,8 @@
                             <ElButton type="primary" @click="publish(item)">发布</ElButton>
                         </div>
                     </div>
-                    <div class="sub-comment-list" v-if="item.children?.length">
-                        <div class="sub-comment" v-for="child in item.children" :key="child.id">
+                    <div v-if="item.children?.length" class="sub-comment-list">
+                        <div v-for="child in item.children" :key="child.id" class="sub-comment">
                             <div>
                                 <ElAvatar :src="child.avatar" />
                             </div>
@@ -47,7 +47,7 @@
                                     <div class="user-box">
                                         <span class="user-name">{{ child.name }}</span>
                                         <span class="user-position">{{ child.location }}</span>
-                                        <div class="comment-answer" v-if="child.target_user">
+                                        <div v-if="child.target_user" class="comment-answer">
                                             <span>回复</span>
                                             <span>{{ child.target_user?.name }}</span>
                                         </div>
@@ -56,25 +56,25 @@
                                     <div class="content">
                                         {{ child.content }}
                                     </div>
-                                    <div class="parent-wrapper" v-if="child.target_user">
+                                    <div v-if="child.target_user" class="parent-wrapper">
                                         <div>"</div>
                                         <div>{{ child.target_user?.content }}</div>
                                         <div>"</div>
                                     </div>
                                     <div class="action-box">
-                                        <div class="item" @click="givePraise(child)" :class="{ active: child.is_praise }">
-                                            <img src="../assets/praise.svg" v-show="!child.is_praise" style="width: 14px" />
-                                            <img src="../assets/praise-blue.svg" v-show="child.is_praise" style="width: 14px" />
+                                        <div class="item" :class="{ active: child.is_praise }" @click="givePraise(child)">
+                                            <img v-show="!child.is_praise" src="../assets/praise.svg" style="width: 14px" />
+                                            <img v-show="child.is_praise" src="../assets/praise-blue.svg" style="width: 14px" />
                                             {{ child.praise_num ? child.praise_num : '点赞' }}
                                         </div>
-                                        <div class="item" @click="answerQuestion(child)" :class="{ active: child.is_answer }">
+                                        <div class="item" :class="{ active: child.is_answer }" @click="answerQuestion(child)">
                                             <ElIcon :size="15">
                                                 <ChatDotSquare />
                                             </ElIcon>
                                             {{ child.is_answer ? '取消回复' : child.message_num ? child.message_num : '回复' }}
                                         </div>
                                     </div>
-                                    <div class="comment-form" v-if="child.is_answer">
+                                    <div v-if="child.is_answer" class="comment-form">
                                         <div class="comment-form-content">
                                             <ElInput v-model="textarea" maxlength="100" placeholder="Please input" show-word-limit type="textarea" />
                                         </div>
@@ -94,32 +94,32 @@
                 <ElInput v-model="mainComment" maxlength="100" placeholder="Please input" show-word-limit type="textarea" />
             </div>
             <div class="comment-form-action">
-                <ElButton type="primary" @click="publish()" :disabled="!mainComment">发布</ElButton>
+                <ElButton type="primary" :disabled="!mainComment" @click="publish()">发布</ElButton>
             </div>
         </div>
     </div>
 </template>
 
 <script setup>
-import { ElAvatar, ElIcon, ElInput, ElButton, ElMessage } from 'element-plus';
 import { ChatDotSquare } from '@element-plus/icons-vue';
-import { ref, defineEmits, defineProps } from 'vue';
-import { useRoute } from 'vue-router';
 import { writeComment, praiseComment } from '_ax/article.js';
 import dayjs from 'dayjs';
+import { ElAvatar, ElIcon, ElInput, ElButton, ElMessage } from 'element-plus';
+import { ref } from 'vue';
+import { useRoute } from 'vue-router';
+
 const props = defineProps({
     content: {
         type: Array,
         default: () => [],
     },
 });
+const emits = defineEmits(['refreshComments']);
 const textarea = ref('');
 const mainComment = ref('');
 const route = useRoute();
 let location = '未知';
-const emits = defineEmits(['refreshComments']);
-
-let name = localStorage.getItem('jay_name') || generateRandomName();
+const name = localStorage.getItem('jay_name') || generateRandomName();
 
 if (!localStorage.getItem('jay_name')) {
     localStorage.setItem('jay_name', name);

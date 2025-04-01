@@ -78,26 +78,26 @@ module.exports = {
                 defineExposeLast: true,
             },
         ],
-        // 'import/order': [
-        //     1,
-        //     {
-        //         'newlines-between': 'always',
-        //         pathGroups: [
-        //             {
-        //                 // Minimatch pattern used to match against specifiers
-        //                 pattern: '@/**',
-        //                 // The predefined group this PathGroup is defined in relation to
-        //                 group: 'external',
-        //                 // How matching imports will be positioned relative to "group"
-        //                 position: 'after',
-        //             },
-        //         ],
-        //         alphabetize: {
-        //             order: 'asc',
-        //             caseInsensitive: true,
-        //         },
-        //     },
-        // ],
+        'import/order': [
+            1,
+            {
+                'newlines-between': 'always',
+                pathGroups: [
+                    {
+                        // Minimatch pattern used to match against specifiers
+                        pattern: '@/**',
+                        // The predefined group this PathGroup is defined in relation to
+                        group: 'external',
+                        // How matching imports will be positioned relative to "group"
+                        position: 'after',
+                    },
+                ],
+                alphabetize: {
+                    order: 'asc',
+                    caseInsensitive: true,
+                },
+            },
+        ],
     },
     // globals: {
     //     // 如果你使用了一些全局变量 (例如来自 <script setup>)，可以在这里定义

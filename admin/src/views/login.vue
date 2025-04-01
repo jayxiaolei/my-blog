@@ -2,13 +2,7 @@
     <div class="login-wrap">
         <div class="ms-login">
             <div class="ms-title">后台管理系统</div>
-            <el-form
-                :model="param"
-                :rules="rules"
-                ref="login"
-                label-width="0px"
-                class="ms-content"
-            >
+            <el-form ref="login" :model="param" :rules="rules" label-width="0px" class="ms-content">
                 <el-form-item prop="username">
                     <el-input v-model="param.username" placeholder="username">
                         <template #prepend>
@@ -17,21 +11,14 @@
                     </el-input>
                 </el-form-item>
                 <el-form-item prop="password">
-                    <el-input
-                        type="password"
-                        placeholder="password"
-                        v-model="param.password"
-                        @keyup.enter="submitForm()"
-                    >
+                    <el-input v-model="param.password" type="password" placeholder="password" @keyup.enter="submitForm()">
                         <template #prepend>
                             <el-button icon="el-icon-lock"></el-button>
                         </template>
                     </el-input>
                 </el-form-item>
                 <div class="login-btn">
-                    <el-button type="primary" @click="submitForm()"
-                        >登录</el-button
-                    >
+                    <el-button type="primary" @click="submitForm()">登录</el-button>
                 </div>
             </el-form>
         </div>
@@ -39,19 +26,20 @@
 </template>
 
 <script>
-import { ref, reactive } from 'vue'
-import { useStore } from 'vuex'
-import { useRouter } from 'vue-router'
-import { ElMessage } from 'element-plus'
-import { loginUser } from '../axios/login'
+import { ElMessage } from 'element-plus';
+import { ref, reactive } from 'vue';
+import { useRouter } from 'vue-router';
+import { useStore } from 'vuex';
+
+import { loginUser } from '../axios/login';
 
 export default {
     setup() {
-        const router = useRouter()
+        const router = useRouter();
         const param = reactive({
             username: 'ajin',
             password: 'Ajin971231',
-        })
+        });
 
         const rules = {
             username: [
@@ -61,42 +49,41 @@ export default {
                     trigger: 'blur',
                 },
             ],
-            password: [
-                { required: true, message: '请输入密码', trigger: 'blur' },
-            ],
-        }
-        const login = ref(null)
+            password: [{ required: true, message: '请输入密码', trigger: 'blur' }],
+        };
+        const login = ref(null);
         const submitForm = () => {
-            login.value.validate(valid => {
+            login.value.validate((valid) => {
                 if (valid) {
-                    loginUser(param).then(({ data, status }) => {
-                        if (status === 200) {
-                            localStorage.setItem('x-token', data.token)
-                            ElMessage.success('登录成功')
-                            router.push('/home')
-                        } 
-                    })
-                    .catch(err => {
-                        ElMessage.error(err.message)
-                    })
+                    loginUser(param)
+                        .then(({ data, status }) => {
+                            if (status === 200) {
+                                localStorage.setItem('x-token', data.token);
+                                ElMessage.success('登录成功');
+                                router.push('/home');
+                            }
+                        })
+                        .catch((err) => {
+                            ElMessage.error(err.message);
+                        });
                 } else {
-                    ElMessage.error('请填写用户名或者密码')
-                    return false
+                    ElMessage.error('请填写用户名或者密码');
+                    return false;
                 }
-            })
-        }
+            });
+        };
 
-        const store = useStore()
-        store.commit('clearTags')
+        const store = useStore();
+        store.commit('clearTags');
 
         return {
             param,
             rules,
             login,
             submitForm,
-        }
+        };
     },
-}
+};
 </script>
 
 <style scoped>

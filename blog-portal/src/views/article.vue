@@ -7,7 +7,7 @@
         <h1 class="article-title">文章题目</h1>
         <div class="article-main">
             <article class="article-content article-box">
-                <v-md-preview :text="text" height="400px" ref="preview" :include-level="[3, 4]"></v-md-preview>
+                <v-md-preview ref="preview" :text="text" height="400px" :include-level="[3, 4]"></v-md-preview>
             </article>
             <nav class="article-nav article-box" :class="{ 'nav-fix': scrollTop >= 130 }">
                 <div class="nav-title">
@@ -41,15 +41,16 @@
 </template>
 
 <script>
-import { reactive, computed, watch, ref } from 'vue';
-import Nav from '_c/nav.vue';
-import Footer from '_c/footer.vue';
-import { ElIcon } from 'element-plus';
 import { Tickets } from '@element-plus/icons-vue';
-import { useStore } from 'vuex';
-import Comment from '_c/comment.vue';
 import { getArticleDetail, getComments } from '_ax/article';
+import Comment from '_c/comment.vue';
+import Footer from '_c/footer.vue';
+import Nav from '_c/nav.vue';
+import { ElIcon } from 'element-plus';
+import { reactive, computed, watch, ref } from 'vue';
 import { useRoute } from 'vue-router';
+import { useStore } from 'vuex';
+
 export default {
     components: {
         Nav,
@@ -66,7 +67,7 @@ export default {
         });
         const route = useRoute();
         const store = useStore();
-        let scrollTop = computed(() => store.state.scrollTop);
+        const scrollTop = computed(() => store.state.scrollTop);
         const isArrive = (item, next) => {
             if (!next && item.top <= store.state.scrollTop) {
                 item.isArrive = true;

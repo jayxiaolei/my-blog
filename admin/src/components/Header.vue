@@ -14,7 +14,7 @@
                 <!-- 用户名下拉菜单 -->
                 <el-dropdown class="user-name" trigger="click" @command="handleCommand">
                     <span class="el-dropdown-link">
-                        {{username}}
+                        {{ username }}
                         <i class="el-icon-caret-bottom"></i>
                     </span>
                     <template #dropdown>
@@ -31,22 +31,22 @@
     </div>
 </template>
 <script>
-import { computed, onMounted } from "vue";
-import { useStore } from "vuex";
-import { useRouter } from "vue-router";
-import { Expand } from '@element-plus/icons-vue'
+import { Expand } from '@element-plus/icons-vue';
+import { computed, onMounted } from 'vue';
+import { useRouter } from 'vue-router';
+import { useStore } from 'vuex';
 export default {
     components: {
-        Expand
+        Expand,
     },
     setup() {
-        const username = localStorage.getItem("ms_username");
+        const username = localStorage.getItem('ms_username');
 
         const store = useStore();
         const collapse = computed(() => store.state.collapse);
         // 侧边栏折叠
         const collapseChage = () => {
-            store.commit("handleCollapse", !collapse.value);
+            store.commit('handleCollapse', !collapse.value);
         };
 
         onMounted(() => {
@@ -58,8 +58,8 @@ export default {
         // 用户名下拉菜单选择事件
         const router = useRouter();
         const handleCommand = (command) => {
-            localStorage.removeItem("x-token");
-            router.push("/login");
+            localStorage.removeItem('x-token');
+            router.push('/login');
         };
 
         return {

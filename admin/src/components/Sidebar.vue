@@ -1,10 +1,18 @@
 <template>
     <div class="sidebar">
-        <el-menu class="sidebar-el-menu" :default-active="onRoutes" :collapse="collapse" background-color="#324157"
-            text-color="#bfcbd9" active-text-color="#20a0ff" unique-opened router>
+        <el-menu
+            class="sidebar-el-menu"
+            :default-active="onRoutes"
+            :collapse="collapse"
+            background-color="#324157"
+            text-color="#bfcbd9"
+            active-text-color="#20a0ff"
+            unique-opened
+            router
+        >
             <template v-for="item in items">
                 <template v-if="item.subs">
-                    <el-submenu :index="item.index" :key="item.index">
+                    <el-submenu :key="item.index" :index="item.index">
                         <template #title>
                             <el-icon :size="20"><component :is="item.icon" /></el-icon>
                             <span>{{ item.title }}</span>
@@ -12,7 +20,7 @@
                     </el-submenu>
                 </template>
                 <template v-else>
-                    <el-menu-item :index="item.index" :key="item.index">
+                    <el-menu-item :key="item.index" :index="item.index">
                         <el-icon :size="20"><component :is="item.icon" /></el-icon>
                         <template #title>{{ item.title }}</template>
                     </el-menu-item>
@@ -23,41 +31,41 @@
 </template>
 
 <script>
-import { computed } from "vue";
-import { useStore } from "vuex";
-import { useRoute } from "vue-router";
-import { HomeFilled, UserFilled, Notebook, Comment } from '@element-plus/icons-vue'
-import { ElSubMenu } from 'element-plus'
+import { HomeFilled, UserFilled, Notebook, Comment } from '@element-plus/icons-vue';
+import { ElSubMenu } from 'element-plus';
+import { computed } from 'vue';
+import { useRoute } from 'vue-router';
+import { useStore } from 'vuex';
 export default {
     components: {
         HomeFilled,
         UserFilled,
         Notebook,
         ElSubMenu,
-        Comment
+        Comment,
     },
     setup() {
         const items = [
             {
-                icon: "HomeFilled",
-                index: "/dashboard",
-                title: "系统首页",
+                icon: 'HomeFilled',
+                index: '/dashboard',
+                title: '系统首页',
             },
             {
-                icon: "UserFilled",
-                index: "/user",
-                title: "用户管理",
+                icon: 'UserFilled',
+                index: '/user',
+                title: '用户管理',
             },
             {
-                icon: "Notebook",
-                index: "/article",
-                title: "文章管理",
+                icon: 'Notebook',
+                index: '/article',
+                title: '文章管理',
             },
             {
-                icon: "Comment",
-                index: "/comment",
-                title: "评论管理",
-            }
+                icon: 'Comment',
+                index: '/comment',
+                title: '评论管理',
+            },
         ];
 
         const route = useRoute();

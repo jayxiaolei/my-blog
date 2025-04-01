@@ -6,10 +6,11 @@
 </template>
 
 <script>
-import { ref, onMounted } from 'vue';
-import { ElMessage } from 'element-plus';
 import { writeArticle, getArticleDetail, editArticleByID } from '_ax/article.js';
+import { ElMessage } from 'element-plus';
+import { ref, onMounted } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
+
 export default {
     setup() {
         const text = ref('');

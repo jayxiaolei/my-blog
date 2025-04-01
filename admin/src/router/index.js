@@ -1,6 +1,6 @@
-import { createRouter, createWebHashHistory } from 'vue-router'
-import Home from '_v/home.vue'
-import Login from '_v/login.vue'
+import Home from '_v/home.vue';
+import Login from '_v/login.vue';
+import { createRouter, createWebHashHistory } from 'vue-router';
 
 const routes = [
     {
@@ -73,21 +73,21 @@ const routes = [
             },
         ],
     },
-]
+];
 
 const router = createRouter({
     history: createWebHashHistory(),
     routes,
-})
+});
 
 router.beforeEach((to, from, next) => {
-    document.title = `${to.meta.title} | 阿金`
-    const token = localStorage.getItem('x-token')
+    document.title = `${to.meta.title} | 阿金`;
+    const token = localStorage.getItem('x-token');
     if (!token && to.path !== '/login') {
-        next('/login')
+        next('/login');
     } else {
-        next()
+        next();
     }
-})
+});
 
-export default router
+export default router;

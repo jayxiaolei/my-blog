@@ -1,4 +1,4 @@
-import axios from './request'
+import axios from './request';
 
 export const loginUser = (params) => axios.post('/api/blog/login', params);
 

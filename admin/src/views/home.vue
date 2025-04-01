@@ -17,11 +17,12 @@
     </div>
 </template>
 <script>
-import { computed } from "vue";
-import { useStore } from "vuex";
-import vHeader from "../components/Header.vue";
-import vSidebar from "../components/Sidebar.vue";
-import vTags from "../components/Tags.vue";
+import { computed } from 'vue';
+import { useStore } from 'vuex';
+
+import vHeader from '../components/Header.vue';
+import vSidebar from '../components/Sidebar.vue';
+import vTags from '../components/Tags.vue';
 export default {
     components: {
         vHeader,
@@ -30,9 +31,7 @@ export default {
     },
     setup() {
         const store = useStore();
-        const tagsList = computed(() =>
-            store.state.tagsList.map((item) => item.name)
-        );
+        const tagsList = computed(() => store.state.tagsList.map((item) => item.name));
         const collapse = computed(() => store.state.collapse);
         return {
             tagsList,
