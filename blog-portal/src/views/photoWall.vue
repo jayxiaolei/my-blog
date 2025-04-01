@@ -110,7 +110,7 @@ export default {
 
         onMounted(() => {
             getIndex();
-            console.log(111);
+            console.log(222);
         });
 
         window.onresize = throttle(() => {
