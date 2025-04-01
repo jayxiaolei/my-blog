@@ -8,7 +8,12 @@
                 <el-table-column prop="username" label="用户名" />
                 <el-table-column label="操作" width="200px">
                     <template #default="scope">
-                        <el-button size="small" type="danger" @click="deleteUser(scope.row)">删除</el-button>
+                        <el-button
+                            size="small"
+                            type="danger"
+                            @click="deleteUser(scope.row)"
+                            >删除</el-button
+                        >
                     </template>
                 </el-table-column>
             </el-table>
@@ -54,10 +59,10 @@
 </template>
 
 <script>
-import { reactive, ref } from 'vue'
+import { regUser } from '_ax/login.js'
 import { getUserList, delUser } from '_ax/user.js'
 import { ElMessage, ElMessageBox } from 'element-plus'
-import { regUser } from '_ax/login.js'
+import { reactive, ref } from 'vue'
 export default {
     setup() {
         const validatePassword = (rule, value, callback) => {
@@ -114,8 +119,8 @@ export default {
                 }
             })
         }
-        let userList = reactive([])
-        let createDialog = ref(false)
+        const userList = reactive([])
+        const createDialog = ref(false)
 
         const getList = () => {
             getUserList().then(
@@ -135,24 +140,21 @@ export default {
             createDialog.value = true
         }
 
-        const deleteUser = (row) => {
-            ElMessageBox.confirm(
-                '确认删除吗？',
-                '警告',
-                {
-                    confirmButtonText: '确认',
-                    cancelButtonText: '取消',
-                    type: 'warning'
-                }
-            )
-            .then(() => {
-                delUser({ user_id: row.id })
-                .then(() => {
-                    ElMessage.success('删除成功')
-                    getList()
-                }, (err) => {
-                    ElMessage.error(err)
-                })
+        const deleteUser = row => {
+            ElMessageBox.confirm('确认删除吗？', '警告', {
+                confirmButtonText: '确认',
+                cancelButtonText: '取消',
+                type: 'warning',
+            }).then(() => {
+                delUser({ user_id: row.id }).then(
+                    () => {
+                        ElMessage.success('删除成功')
+                        getList()
+                    },
+                    err => {
+                        ElMessage.error(err)
+                    },
+                )
             })
         }
         return {
@@ -163,7 +165,7 @@ export default {
             registerInfo,
             rules,
             submitForm,
-            deleteUser
+            deleteUser,
         }
     },
 }
