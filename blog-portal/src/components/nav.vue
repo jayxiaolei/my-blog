@@ -34,12 +34,11 @@
 
 <script>
 import { HomeFilled, Briefcase, Camera } from '@element-plus/icons-vue';
+import { throttle } from '_a/index.js';
 import { ElIcon, ElDropdown, ElDropdownMenu, ElDropdownItem } from 'element-plus';
 import { computed } from 'vue';
 import { useRouter } from 'vue-router';
 import { useStore } from 'vuex';
-
-import { throttle } from '_a/index.js';
 
 export default {
     components: {
@@ -70,10 +69,10 @@ export default {
                 store.commit('getScrollTop');
             };
         window.onscroll = throttle(scrollBody, 300);
-        const router = useRouter(),
-            clickDropItem = (item) => {
-                router.push(item.path);
-            };
+        const router = useRouter();
+        const clickDropItem = (item) => {
+            router.push(item.path);
+        };
         return {
             navList,
             top,
