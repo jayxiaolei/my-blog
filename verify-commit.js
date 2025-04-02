@@ -1,4 +1,6 @@
-const msgPath = process.env.HUSKY_GIT_PARAMS;
+const msgPath = process.argv[2] || '.git/COMMIT_EDITMSG';
+
+console.log(msgPath);
 const msg = require('fs').readFileSync(msgPath, 'utf-8').trim();
 
 const commitRE = /^(feat|fix|docs|style|refactor|perf|test|workflow|build|ci|chore|release|workflow)(\(.+\))?: .{1,50}/;
