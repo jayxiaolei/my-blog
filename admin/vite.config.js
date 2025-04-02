@@ -11,7 +11,7 @@ export default defineConfig({
         vue(),
         ElementPlus(),
         eslintPlugin({
-            fix: true, // 是否自动修复
+            fix: false, // 是否自动修复
             include: ['src/**/*.js', 'src/**/*.vue', 'src/**/*.ts', 'src/**/*.jsx', 'src/**/*.tsx'], //  Lint 目标文件 MimeType
             exclude: ['/node_modules/**'], // 排除的文件 MimeType
             emitWarning: false, // 仅在开发模式进行检测
